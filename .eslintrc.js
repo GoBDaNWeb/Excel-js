@@ -18,6 +18,9 @@ module.exports = {
         'indent': "off",
         'quotes': "off",
         "linebreak-style": "off",
-        "eol-last": "off"
+        "eol-last": "off",
+        "arrow-parens": "off",
+        "operator-linebreak": "off",
+        "no-trailing-spaces": "off"
     }
 }
