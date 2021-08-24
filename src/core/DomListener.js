@@ -10,7 +10,6 @@ export class DomListener {
     }
 
     initDomListener() {
-        console.log(this.listeners, this.$root)
         this.listeners.forEach(listener => {
             const method = getMethodName(listener)
             if (!this[method]) {
@@ -20,10 +19,6 @@ export class DomListener {
                 )
             }
             this[method] = this[method].bind(this)
-            console.log(method)
-            console.log(listener)
-            console.log(this[method])
-            console.log(this)
 
             this.$root.on(listener, this[method])
         })

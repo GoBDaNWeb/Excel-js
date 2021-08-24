@@ -16,7 +16,6 @@ export class Excel {
             }
             $el.html(component.toHTML())
             $root.append($el)
-            console.log(component)
             return component
         })
 
@@ -25,7 +24,6 @@ export class Excel {
 
     render() {
         this.$el.append(this.getRoot())
-        console.log(this.components)
 
         this.components.forEach(component => component.init())
     }
