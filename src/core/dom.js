@@ -13,20 +13,19 @@ class Dom {
         return this.$el.outerHTML.trim()
     }
 
-    clear() {
-        this.html('')
-        return this
+    text(text) {
+        if (typeof text == 'string') {
+            this.$el.textContent = text
+            return this
+        }
+        if (this.$el.tagName.toLowerCase() === 'input') {
+            return this.$el.value.trim()
+        }
+        return this.$el.textContent.trim()
     }
 
-    append(node) {
-        if (node instanceof Dom) {
-            node = node.$el
-        }
-        if (Element.prototype.append) {
-            this.$el.append(node)
-        } else {
-            this.$el.appendChild(node)
-        }
+    clear() {
+        this.html('')
         return this
     }
 
@@ -34,20 +33,38 @@ class Dom {
         this.$el.addEventListener(eventType, callback)
     }
 
-    remove(eventType, callback) {
+    off(eventType, callback) {
         this.$el.removeEventListener(eventType, callback)
+    }
+
+    find(selector) {
+        return $(this.$el.querySelector(selector))
+    }
+
+    append(node) {
+        if (node instanceof Dom) {
+            node = node.$el
+        }
+
+        if (Element.prototype.append) {
+            this.$el.append(node)
+        } else {
+            this.$el.appendChild(node)
+        }
+
+        return this
     }
 
     get data() {
         return this.$el.dataset
     }
 
-    getCoords() {
-        return this.$el.getBoundingClientRect()
-    }
-
     closest(selector) {
         return $(this.$el.closest(selector))
+    }
+
+    getCoords() {
+        return this.$el.getBoundingClientRect()
     }
 
     findAll(selector) {
@@ -55,9 +72,35 @@ class Dom {
     }
 
     css(styles = {}) {
-        Object.keys(styles).forEach(key => {
-            this.$el.style[key] = styles[key]
-        })
+        Object
+            .keys(styles)
+            .forEach(key => {
+                this.$el.style[key] = styles[key]
+            })
+    }
+
+    id(parse) {
+        if (parse) {
+            const parsed = this.id().split(':')
+            return {
+                row: +parsed[0],
+                col: +parsed[1]
+            }
+        }
+        return this.data.id
+    }
+
+    focus() {
+        this.$el.focus()
+        return this
+    }
+
+    addClass(className) {
+        this.$el.classList.add(className)
+    }
+
+    removeClass(className) {
+        this.$el.classList.remove(className)
     }
 }
 
